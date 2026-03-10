@@ -1,6 +1,13 @@
 # Active Directory Lab
 
 
+![Windows Server](https://img.shields.io/badge/Windows_Server-2019-blue)
+![Active Directory](https://img.shields.io/badge/Active_Directory-AD_DS-blue)
+![PowerShell](https://img.shields.io/badge/PowerShell-Automation-darkblue)
+![VirtualBox](https://img.shields.io/badge/VirtualBox-Lab-orange)
+![Cybersecurity](https://img.shields.io/badge/Cybersecurity-Home_Lab-green)
+
+
 <p align="center">
   <img src="screenshots/active-directory-lab.jpg" width="800">
 </p>
