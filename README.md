@@ -1,6 +1,9 @@
 # Active Directory Lab
 
 
+<p align="center">
+  <img src="screenshots/active-directory-lab.jpg" width="800">
+</p>
 
 
 ## Overview
@@ -14,6 +17,9 @@ Using Oracle VirtualBox, I created a controlled environment consisting of two vi
 ## Objectives
 
 
+<p align="center">
+  <img src="screenshots/active-directory-lab-setup.jpg" width="800">
+</p>
 
 
 During this lab, the following tasks were completed:
@@ -51,8 +57,6 @@ The default gateway (192.168.10.1) is provided by the Routing and Remote Access 
 
 
 ---
-
-
 
 
 ## VirtualBox Network Configuration
@@ -96,11 +100,23 @@ After creating the virtual machines, I attached the ISO files and installed both
 During the installation:
 
 - Install Windows Server 2019 using the on-screen instructions.
+
+  
+ <p align="center">
+  <img src="screenshots/install-windows server-2019.jpg" width="800">
+ </p>
+
+ 
 - Create an administrator account with a strong password since the account will have elevated permissions.
 
----
 
+ <p align="center">
+  <img src="screenshots/create-an-admin-account.jpg" width="800">
+ </p>
 
+ <p align="center">
+  <img src="screenshots/admin-account.jpg" width="800">
+ </p>
 
 
 
@@ -108,10 +124,10 @@ During the installation:
 
 After booting into Windows Server 2019, I opened **Server Manager** and installed the **Active Directory Domain Services (AD DS)** role.
 
----
 
-
-
+ <p align="center">
+  <img src="screenshots/server-manager.jpg" width="800">
+ </p>
 
 
 ## Crafting a Domain Admin Account
@@ -137,10 +153,10 @@ To allow the Windows 10 client machine to receive IP configuration automatically
 
 This ensures the client machine receives an IP address dynamically and automatically uses the Domain Controller for DNS resolution.
 
----
 
-
-
+ <p align="center">
+  <img src="screenshots/dhcp-scope-config.jpg" width="800">
+ </p>
 
 
 ## Structuring the Organizational Unit
@@ -155,10 +171,6 @@ To better organize users and simplify management, an Organizational Unit was cre
 This lab uses an OU named ```_USERS```.
 
 ---
-
-
-
-
 
 ## Routing and Remote Access (RRAS) Configuration
 
@@ -176,7 +188,11 @@ Routing and Remote Access (RRAS) was configured to simulate a real corporate env
 
 The main reason RRAS was implemented is to allow the internal client machine to route traffic properly while remaining inside the internal network. This mirrors how organizations separate internal workstations from external networks.
 
----
+
+ <p align="center">
+  <img src="screenshots/routing-and-remote-access-config.jpg" width="800">
+ </p>
+
 
 ## Configure NIC for Internet Access
 
@@ -321,6 +337,11 @@ This command defines several attributes for each user account, including:
 The parameter ```-PasswordNeverExpires $true``` ensures that passwords do not expire in this lab environment. In production systems, password expiration policies are typically enforced for security reasons.
 
 
+ <p align="center">
+  <img src="screenshots/powershell-bulk-user-script.jpg" width="800">
+ </p>
+
+
 ---
 
 ## Why This Matters
@@ -338,7 +359,9 @@ After setting up the Windows 10 client machine, it was configured to connect to 
 To validate the configuration, I logged into the system using one of the newly created domain accounts. This simulated the login experience of a typical employee within an organization and confirmed that the Active Directory environment was functioning correctly.
 
 
-
+ <p align="center">
+  <img src="screenshots/domain-client-login.jpg" width="800">
+ </p>
 
 
 ---
