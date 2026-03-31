@@ -1,5 +1,5 @@
 # ----- These Variables can be edited depending on the Use Case ----- #
-$PASSWORD_FOR_USERS   = "Password1"
+$PASSWORD_FOR_USERS   = "Password123"
 $USER_FIRST_LAST_LIST = Get-Content .\names.txt
 # ------------------------------------------------------ #
 
