@@ -15,9 +15,21 @@
 
 ## Overview
 
-This lab was designed to simulate a real-world Active Directory environment and provide hands-on experience with configuring a Windows-based network. The goal of this project is to build a detailed understanding of how Active Directory functions while also exploring key Windows networking concepts.
+This lab simulates a real-world enterprise Active Directory environment using Oracle VirtualBox. The goal is to gain hands-on experience with Windows Server administration, identity management, and network services commonly used in corporate IT infrastructures.
 
-Using Oracle VirtualBox, I created a controlled environment consisting of two virtual machines: one running Windows Server 2019 as the Domain Controller and one running Windows 10 as the client machine.
+The environment consists of:
+- A Windows Server 2019 Domain Controller (DC)
+- A Windows 10 Client machine
+
+The Domain Controller provides centralized authentication, DNS resolution, DHCP services, and routing via RRAS, allowing the client machine to function as part of a corporate domain network.
+
+---
+
+## 🎥 Lab Demonstration (YouTube)
+
+Watch the full walkthrough of this lab here:
+
+https://www.youtube.com/watch?v=7X6PDxBB4pM
 
 ---
 
@@ -25,7 +37,7 @@ Using Oracle VirtualBox, I created a controlled environment consisting of two vi
 
 
 <p align="center">
-  <img src="screenshots/active-directory-lab-setup.jpg" width="800">
+  <img src="screenshots/consult setup.png" width="800">
 </p>
 
 
@@ -53,18 +65,37 @@ During this lab, the following tasks were completed:
 
 ## IP Addressing Plan
 
-To ensure proper communication between the Domain Controller and the client machine, the lab was built using a dedicated internal subnet.
-
 | Device | Role | IP Address | Subnet Mask | Default Gateway | DNS Server |
 |--------|------|------------|-------------|----------------|------------|
 | DC | Domain Controller | 192.168.10.10 | 255.255.255.0 | 192.168.10.1 | 192.168.10.10 |
 | CLIENT | Domain Client | DHCP Assigned | 255.255.255.0 | 192.168.10.1 | 192.168.10.10 |
 
-The default gateway (192.168.10.1) is provided by the Routing and Remote Access (RRAS) configuration on the Domain Controller, which allows internal clients to route traffic externally through the server. This setup ensures that all domain authentication and name resolution requests from the client are handled through the Domain Controller.
-
-
+- The Domain Controller hosts DHCP, DNS, and RRAS services.
+- The default gateway (192.168.10.1) is configured via RRAS on the Domain Controller.
+- All clients use the Domain Controller for DNS resolution.
+  
 ---
 
+## DNS Configuration
+
+The Domain Controller also functions as the DNS server. This is critical in Active Directory environments because:
+
+- All domain authentication depends on DNS
+- Clients must use the Domain Controller’s IP address as their DNS server
+- Without proper DNS configuration, domain join and login will fail
+
+In this lab:
+- DNS Server: 192.168.10.10 (Domain Controller)
+  
+---
+## Network Design
+
+- Internal Network Name: ConsultNet (VirtualBox Internal Network)
+- External Access: NAT (via Domain Controller)
+
+This setup simulates a corporate network where internal machines are isolated but can access external resources through a central server.
+
+---
 
 ## VirtualBox Network Configuration
 
@@ -161,11 +192,6 @@ To allow the Windows 10 client machine to receive IP configuration automatically
 This ensures the client machine receives an IP address dynamically and automatically uses the Domain Controller for DNS resolution.
 
 
- <p align="center">
-  <img src="screenshots/dhcp-scope-config.jpg" width="800">
- </p>
-
-
 ## Structuring the Organizational Unit
 
 To better organize users and simplify management, an Organizational Unit was created:
@@ -193,8 +219,12 @@ Routing and Remote Access (RRAS) was configured to simulate a real corporate env
 
 ### Purpose of RRAS in this Lab
 
-The main reason RRAS was implemented is to allow the internal client machine to route traffic properly while remaining inside the internal network. This mirrors how organizations separate internal workstations from external networks.
+RRAS was configured with NAT to allow internal clients to access the internet through the Domain Controller.
 
+This setup simulates a real enterprise network where:
+- Internal machines do not connect directly to the internet
+- All traffic is routed through a central server
+- Network control and monitoring are centralized
 
  <p align="center">
   <img src="screenshots/routing-and-remote-access-config.jpg" width="800">
@@ -228,13 +258,13 @@ The script begins by defining a default password and importing the list of user 
 
 ```
     # ----- Edit these Variables for your own Use Case ----- #
-    $PASSWORD_FOR_USERS   = "Password1"
+    $PASSWORD_FOR_USERS   = "Password123"
     $USER_FIRST_LAST_LIST = Get-Content .\names.txt
     # ------------------------------------------------------ #
 ```
 Two important variables are defined here:
 
-- ```$PASSWORD_FOR_USERS   = "Password1"``` sets a default password for all generated accounts. In this lab environment the password is set to ```"Password1"``` for simplicity. In a production environment, unique passwords or enforced password policies would normally be used.
+- ```$PASSWORD_FOR_USERS   = "Password123"``` sets a default password for all generated accounts. In this lab environment the password is set to ```"Password123"``` for simplicity. In a production environment, unique passwords or enforced password policies would normally be used.
 
 - ```$USER_FIRST_LAST_LIST = Get-Content .\names.txt``` reads the contents of the ```names.txt``` file. Each line in this file contains a first and last name formatted as "FirstName LastName". This list will be used to generate the user accounts automatically.
 
